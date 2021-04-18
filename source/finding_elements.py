@@ -12,7 +12,7 @@
 
 # start the browser
 from selenium import webdriver
-
+from selenium.common.exceptions import NoSuchElementException
 from utilities import *
 
 driver = webdriver.Chrome()
@@ -23,23 +23,28 @@ driver.maximize_window()
 
 def open_website(url):
     """open the website, and click on 'No, thanks!' button"""
-    # url = "https://www.seleniumeasy.com/test/basic-first-form-demo.html"
-    driver.get(url)
-    print(f"Title of the page 1: {driver.title}")
+    try:
+        # url = "https://www.seleniumeasy.com/test/basic-first-form-demo.html"
+        driver.get(url)
+        print(f"Title of the page 1: {driver.title}")
 
-    # time.sleep(10)  # one way of holding the execution and to wait for something
-    print("now clicking the 'No thanks' button..")
-    driver.find_element_by_link_text('No, thanks!').click()
+        # time.sleep(10)  # one way of holding the execution and to wait for something
+        print("now clicking the 'No thanks' button..")
+        driver.find_element_by_link_text('No, thanks!').is_displayed().click()
+    except NoSuchElementException as err:
+        print(f"pop fif not appear{err}")
 
 
 def back_forward():
+    img1 = f'./../screenshots/{get_str_seconds()}_datapage.png'
+    img2 = f'./../screenshots/{get_str_seconds()}_seleniumdemo.png'
     driver.back()
     time.sleep(5)
     print(f"Title of the page 2: {driver.title}")
-    driver.get_screenshot_as_file(f'screenshots/{get_str_seconds()}_datapage.png')
+    driver.get_screenshot_as_file(img1)
     driver.forward()
     print(f"Title of the page 3: {driver.title}")
-    driver.get_screenshot_as_file(f'screenshots/{get_str_seconds()}_seleniumdemo.png')
+    driver.get_screenshot_as_file(img2)
     time.sleep(5)
 
 
@@ -50,6 +55,7 @@ def get_total_input_fields():
     enter the "20" text in a
     enter the "30" text in b
     """
+    img1 = f'./../screenshots/{get_str_seconds()}_result.png'
     driver.find_element_by_id('sum1').send_keys("20")
     bvalue_input = driver.find_element_by_id('sum2')
     bvalue_input.send_keys("30")
@@ -60,7 +66,7 @@ def get_total_input_fields():
     # sum_button = driver.find_element_by_class_name("btn btn-default")
     # sum_button = driver.find_element_by_link_text("Get Total")
     sum_button.click()
-    driver.get_screenshot_as_file(f'screenshots/{get_str_seconds()}_result.png')
+    driver.get_screenshot_as_file(img1)
 
 
 def close_browser():
@@ -68,20 +74,20 @@ def close_browser():
     driver.quit()  # closes the browser
 
 
-print("Execution starting ...")
-# Scenario 1:
-url_inputs = "https://www.seleniumeasy.com/test/basic-first-form-demo.html"
-
-open_website(url_inputs)
-back_forward()
-get_total_input_fields()
-close_browser()
-
-# Scenario 2:
-url_checkbox = "https://www.seleniumeasy.com/test/basic-checkbox-demo.html"
-
-open_website(url_inputs)
-# create steps to test checkbox using selenium
-close_browser()
-
-print("Steps are completed!")
+def checkbox_test():
+    # todo: code here
+    pass
+    # find the element to check and click
+    check_xpath = "//input[@id='isAgeSelected']"
+    print("check box is started")
+    checkbox = driver.find_element_by_xpath(check_xpath)
+    checkbox.click()
+    time.sleep(5)
+    # find message el and get text
+    print(f"is Checkbox is selected True/False: {checkbox.is_selected}()")
+    # verify the checkbox is checked
+    msg_css_selector = "txtAge"
+    msg = driver.find_element_by_css_selector(msg_css_selector)
+    msg_text = msg.text
+    print(f"Final message: {msg_text}")
+    assert "Success" in msg_text
