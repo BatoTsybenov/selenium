@@ -32,5 +32,5 @@ driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 # sum_button = driver.find_element_by_link_text("Get Total").click()
 sum_button = driver.find_element_by_xpath("//button[text()='Get Total']")
 
-print("Steps are completed nah")
+print("Steps are completed")
 
