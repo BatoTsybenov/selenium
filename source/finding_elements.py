@@ -10,20 +10,28 @@
 # start the browser
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
+<<<<<<< HEAD
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
+=======
+from selenium.webdriver.common.keys import Keys
+
+>>>>>>> origin/master
 from utilities import *
 
 # implicit wait is defined once when you start the browser and this will apply all find element steps
+<<<<<<< HEAD
 # this will disable ads , unwanted popups
 options = Options()
 options.add_argument('--disable-notifications')
 # options.add_argument('--headless')  # running the chrome on background
 driver = webdriver.Chrome(chrome_options=options)
+=======
+>>>>>>> origin/master
 driver.implicitly_wait(5)
 driver.maximize_window()
 
@@ -43,10 +51,12 @@ def open_website(url):
 def back_forward():
     img1 = f'./../screenshots/{get_str_seconds()}_datapage.png'
     img2 = f'./../screenshots/{get_str_seconds()}_seleniumdemo.png'
+
     driver.back()
     time.sleep(5)
     print(f"Title of the page 2: {driver.title}")
     driver.get_screenshot_as_file(img1)
+
     driver.forward()
     print(f"Title of the page 3: {driver.title}")
     driver.get_screenshot_as_file(img2)
@@ -61,6 +71,7 @@ def get_total_input_fields():
     enter the "30" text in b
     """
     img1 = f'./../screenshots/{get_str_seconds()}_result.png'
+
     driver.find_element_by_id('sum1').send_keys("20")
     bvalue_input = driver.find_element_by_id('sum2')
     bvalue_input.send_keys("30")
@@ -82,27 +93,47 @@ def checkbox_test():
     # todo: code here
     # find the element (using xpath) to check, and click
     check_xpath = "//input[@id='isAgeSelected']"
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
     print("checkbox test started ...")
     checkbox = driver.find_element_by_xpath(check_xpath)
     checkbox.click()
     time.sleep(5)
+<<<<<<< HEAD
     # verify the checkbox is checked
     print(f"Is Checkbox selected (True/False): {checkbox.is_selected()}")
+=======
+
+    # verify the checkbox is checked
+    print(f"Is Checkbox selected (True/False): {checkbox.is_selected()}")
+
+>>>>>>> origin/master
     # find the message element and get text
     msg_css_selector = "#txtAge"
     msg = driver.find_element_by_css_selector(msg_css_selector)
     msg_text = msg.text
     print(f"Final message: {msg_text}")
+
     assert "Success" in msg_text
 
 
 def ecommerce_search():
     # find the element by id 'search_query_top'
     # search for dress (hit enter or click on search button)
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
     srch_box = driver.find_element_by_id("search_query_top")
     srch_box.send_keys("dress")
     srch_box.send_keys(Keys.RETURN)
     time.sleep(5)
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
     # get the list of products and get the text out of each product
     #     use find elements to find products listed, this returns a list named 'products'
     #     loop through this list and use element.text
@@ -112,6 +143,10 @@ def ecommerce_search():
     prod_names = []
     for product in products:
         prod_names.append(product.text.strip())
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
     #     we have a list of elements, len(products)
     print(f"we have {len(products)} products listed.")
     # click on last product >  products[-1]
@@ -127,16 +162,26 @@ def amazon_example():
     # driver = webdriver.Chrome()
     host = "https://www.amazon.com/"
     driver.get(host)
+<<<<<<< HEAD
     host = driver.current_url  # this will return the current page url
+=======
+    host = driver.current_url # this will return the current page url
+
+>>>>>>> origin/master
     print(host)  # 'https://www.amazon.com/'
     if driver.current_url == host:
         print("yess test passed")
     else:
         print("noo test failed")
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
     print(f"Title of the current page: {driver.title}")
     'Amazon.com: Online Shopping for Electronics, Apparel, Computers, Books, DVDs & more'
     search_box = driver.find_element_by_id("twotabsearchtextbox")
     search_box.send_keys("kids toys")
+<<<<<<< HEAD
     search_box.send_keys(Keys.RETURN)
     search_box.clear()
 
@@ -297,3 +342,8 @@ def explicit_wait_methods():
     print("waiting until box is unchecked...")
     wdwait.until_not(EC.element_to_be_selected((By.CSS_SELECTOR, '#ch')))
     print("case 4 completed!")
+=======
+
+    search_box.send_keys(Keys.RETURN)
+    search_box.clear()
+>>>>>>> origin/master
