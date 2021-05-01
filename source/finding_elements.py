@@ -10,16 +10,13 @@
 # start the browser
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
-
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
-
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
-
-
 from utilities import *
 
 # implicit wait is defined once when you start the browser and this will apply all find element steps
@@ -99,7 +96,6 @@ def checkbox_test():
     # verify the checkbox is checked
     print(f"Is Checkbox selected (True/False): {checkbox.is_selected()}")
 
-
     # verify the checkbox is checked
     print(f"Is Checkbox selected (True/False): {checkbox.is_selected()}")
 
@@ -146,7 +142,7 @@ def amazon_example():
     # driver = webdriver.Chrome()
     host = "https://www.amazon.com/"
     driver.get(host)
-    host = driver.current_url # this will return the current page url
+    host = driver.current_url  # this will return the current page url
 
     print(host)  # 'https://www.amazon.com/'
     if driver.current_url == host:
@@ -317,4 +313,87 @@ def explicit_wait_methods():
     print("waiting until box is unchecked...")
     wdwait.until_not(EC.element_to_be_selected((By.CSS_SELECTOR, '#ch')))
     print("case 4 completed!")
+
+
+def drag_drop_action():
+    """
+    Demonstrates to handle drag and drop mouse
+    """
+    pass
+    url = "https://www.seleniumeasy.com/test/drag-and-drop-demo.html"
+    driver.get(url)
+    driver.refresh()
+    print("Identifiing sources and target elements")
+    elem1 = driver.find_element_by_xpath("//span[contains(text(),'Draggable 1')]")
+    elem2 = driver.find_element_by_xpath("//span[contains(text(),'Draggable 2')]")
+    elem3 = driver.find_element_by_xpath("//span[contains(text(),'Draggable 3')]")
+    elem4 = driver.find_element_by_xpath("//span[contains(text(),'Draggable 4')]")
+
+    drop_area = driver.find_element_by_xpath("//div[@id='mydropzone']")
+    print("performing the drag and drop")
+    actions = ActionChains(driver)
+    actions.click_and_hold(elem2).pause(6).move_to_element(drop_area).release(drop_area).perform()
+    # ActionChains(driver).drag_and_drop(elem1, drop_area).perform()
+    # actions.drag_and_drop(elem1, drop_area).perform()
+    time.sleep(20)
+    print("completed drag and drop")
+
+
+def drag_drop_action2():
+    """
+    Demonstrates to handle drag and drop mouse movements with Selenium.
+    """
+    url = "https://www.globalsqa.com/demo-site/draganddrop/"
+    driver.get(url)
+    time.sleep(5)
+
+    print("Identifying the source and target elements...")
+    elem1 = driver.find_element_by_xpath("//img[contains(@src, 'high_tatras_min.jpg')]")
+    elem2 = driver.find_element_by_xpath("//img[contains(@src, 'high_tatras_min2.jpg')]")
+    elem3 = driver.find_element_by_xpath("//img[contains(@src, 'high_tatras_min3.jpg')]")
+    elem4 = driver.find_element_by_xpath("//img[contains(@src, 'high_tatras_min4.jpg')]")
+
+    drop_area = driver.find_element_by_xpath("//div[@id='trash']")
+
+    print("performing the drag and drop action")
+    actions = ActionChains(driver)
+    actions.drag_and_drop(elem1, drop_area).perform()
+    time.sleep(10)
+    print("completed drag and drop.")
+
+
+def drag_drop_action3():
+    # Step:
+    # start the website
+    # drag and drop item 1
+    # verify item 1 is under dropped list
+    # drag and drop item 2
+    # verify item 2 is under dropped list
+
+    driver.get("http://testautomationpractice.blogspot.com/")
+    item1 = driver.find_element_by_xpath("//div[@id='draggable']")
+    drop_zone = driver.find_element_by_xpath("//div[@id='droppable']")
+
+    actions = ActionChains(driver)
+    actions.drag_and_drop(item1, drop_zone).perform()
+    # actions.move_to_element(item1, drop_zone).perform() # hover over element (mouse movement)
+    time.sleep(10)
+    print("drag and drop finished.")
+
+
+def move_mouse_action():
+    driver.get("http://automationpractice.com/index.php")
+
+    time.sleep(5)
+    prod_xpath = '//ul[@id="homefeatured"]//a[@title="Faded Short Sleeve T-shirts" and @class="product-name"]'
+
+    driver.execute_script("window.scrollTo(0, 500);")
+    time.sleep(5)
+    prod1 = driver.find_element_by_xpath(prod_xpath)
+
+    actions = ActionChains(driver)
+    actions.move_to_element(prod1)
+    # actions.drag_and_drop_by_offset(prod1, 300, 150)
+    time.sleep(10)
+
 
